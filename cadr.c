@@ -22,12 +22,11 @@ int rank(struct card c){
     };
 }
 
-char suit(struct card c){
+int *suit(struct card c){
     switch(c.id / 13){
-        case 0: return "Пики";
-        case 1: return "Черви";
-        case 2: return "Буби";
-        case 3: return "Крести";
-        default: return "Произошла ошибка, неизвестная масть";
+        case 0: return 1;
+        case 1: return 2;
+        case 2: return 3;
+        case 3: return 4;
     }
 }
