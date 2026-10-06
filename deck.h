@@ -3,15 +3,16 @@
 #include "card.h"
 
 struct  deck{
-    struct card *cards[CARD];
+    struct card *cards;
     short int count; // карт в колоде сейчас
     short int masscount; //вместимость колоды
 };
 
 int deckInit(struct deck *deck);
-int deckStart (struct deck *deck, struct card *card);
-int deckGivecard(struct deck *deck);
-void decksort(struct deck *deck);
+int deckGivecard(struct deck *deck, struct card *outcard);
+void deckSort(struct deck *deck);
+int deckDestr(struct deck *deck);
+
 
 #endif
 
