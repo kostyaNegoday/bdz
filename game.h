@@ -1,32 +1,41 @@
 #ifndef GAME
 #define GAME
-
 #include "deck.h"
 #include "hand.h"
 
-struct player {
-    char name[50];
-    struct hand hand;
-    int score;
+#define MAXPLAYERS 10
+#define MINPLAYERS 2
+#define MAXNAME 64
+#define MAXWINS 5
+#define GAMEOK 1
+#define GAMEFAILED 0
+#define EMPTYDECK -2
+
+typedef struct {
+    char name[MAXNAME];
+    hand hand;
     int wins;
     int enough;
-    int determinated;
-};
+    int toomuch;
+} player;
 
-struct game {
-    struct player *players;
+typedef struct{
+    player *players;
     int numPlayers;
-    struct deck deck;
+    deck deck;
     int phase;
-    int currPlayer;
-};
+    int currentPlayer;
+} game;
 
-int playerInit(struct player *player, struct game *g);
-int gameInit(struct game *game, int numPlayers, char *playerNames[]);
-int gameStart(struct game *game);
-int gamePlay(struct game *game);
-int gameEnd(struct game *game);
-int deckShuffle(struct deck *deck);
-void gameDestroy(struct game *game);
+int newGame(game *game, int numPlayers, char *playerNames[]);
+int gameDraw(game *game);
+int gameStand(game *game);
+int gameShuffle(game *game);
+int gameNextround(game *game);
+int bestScore(game *game);
+int gameRoundWunner(game*game);
+int gameValidate(game *game);
+void gameDestroy(game *game);
+
 
 #endif
