@@ -1,14 +1,23 @@
 #ifndef CARD_H
 #define CARD_H
-enum {CARD = 52};
-struct card{
+#define CARDCOUNT 52
+#define SUITCOUNT 4
+#define RANKCOUNT 13
+typedef struct {
     int id;
-    int rank;
-    int *suit;
-};
+} card;
 
-_Bool validcard(struct card c);
-int rank(struct card c);  // номинал
-int *suit(struct card c); // масть
+typedef struct{
+    card card;
+    CardNode *next;
+} CardNode;
 
+int validcard(card card);
+int rank(card card); 
+int suit(card card); 
+int cardsort(card c, card c1);
+char *cardrankname(card card);
+char *cardsuitname(card card);
+CardNode *createCardNode(card card);
+void freeCardNode(CardNode *node);
 #endif

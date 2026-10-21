@@ -21,7 +21,7 @@ struct game {
     int currPlayer;
 };
 
-int playerInit(struct player *player, char *name);
+int playerInit(struct player *player, struct game *g);
 int gameInit(struct game *game, int numPlayers, char *playerNames[]);
 int gameStart(struct game *game);
 int gamePlay(struct game *game);
