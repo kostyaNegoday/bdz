@@ -1,50 +1,73 @@
 #include "deck.h"
 #include <stdlib.h>
 
-int deckInit(struct deck *deck){
-    if(deck == NULL) return 1;
-    deck->count = 0;
-    deck->masscount = CARD;
-    for(int i = 0; i < CARD; i++){
-        deck->cards[i].id = i;
-    }
-    return 0;
-}
-
-int deckGivecard(struct deck *deck, struct card *outcard) {
-    if (deck == NULL || outcard == NULL || deck->cards == NULL) return 1;
-    if (deck->count <= 0) return 2; /* колода пуста */
-    deck->count--;
-    *outcard = deck->cards[deck->count];
-    return 0;
-}
-
-int deckReturn(struct deck *deck, struct card *outcard) {
-    if (deck == NULL || outcard == NULL || deck->cards == NULL) return 1;
-    if (deck->count >= deck->masscount) return 2; /* колода полна */
-    deck->cards[deck->count] = *outcard;
-    deck->count++;
-    return 0;
-}   
-
-void deckSort(struct deck *deck, struct card *outcard) {
-    if (deck == NULL || outcard == NULL || deck->cards == NULL) return;
-    for (int i = 0; i < deck->count - 1; i++) {
-        for (int j = i + 1; j < deck->count; j++) {
-            if (deck->cards[i].id > deck->cards[j].id) {
-                struct card temp = deck->cards[i];
-                deck->cards[i] = deck->cards[j];
-                deck->cards[j] = temp;
-            }
+int deckinit(deck *deck){
+    if (deck == NULL || deck->top !=NULL) return 0;
+    for (int id =0; id<CARDCOUNT; ++id){
+        CardNode *node = createCardNode((card){id});
+        if (node == NULL) {
+            deckdestroy(deck);
+            return 0;
         }
     }
+    return 1;
 }
 
-int deckDestr(struct deck *deck) {
-    if (deck == NULL) return 1;
-    free(deck->cards);
-    deck->cards = NULL;
+CardNode *deckdraw(deck *deck) {
+    if (deck == NULL ||deck->top == NULL) return NULL;
+    CardNode *node = deck->top;
+    deck->top = node->next;
+    if (deck->top == NULL) deck->bottom == NULL;
+    node->next = NULL;
+    --deck->count;
+    return node;
+}
+
+void deckbottom (deck *deck, CardNode *chain){
+    if (deck == NULL) return;
+    while (chain!=NULL){
+        CardNode *next = chain->next;
+        chain->next = NULL;
+        if (deck->bottom == NULL){
+            deck->top = chain;
+            deck->bottom = chain;
+        } else {
+            deck->bottom->next = chain;
+        }
+        deck->bottom = chain;
+        ++deck->count;
+        chain = next;
+    }
+}
+
+int deckshuffle(deck *deck){
+    if (deck == NULL) return 0;
+    if (deck->count < 2) return 1;
+    CardNode **nodes = malloc((size_t)deck->count * sizeof(CardNode *));
+    if (nodes == NULL) return 0;
+    int n = 0;
+    for (CardNode *node = deck->top; node != NULL && n<deck->count; node = node->next){
+        nodes[n++] = node;
+    }
+    for(int i = n - 1; i > 0; --i){
+        int j = rand() % (i + 1);
+        CardNode *tmp = nodes[i];
+        nodes[i] = nodes[j];
+        nodes[j] = tmp;
+    }
+
+    for (int i =0; i<n;i++) nodes[i]->next = nodes[i+1];
+    nodes[n-1]->next = NULL;
+    deck->top = nodes[0];
+    deck->bottom = nodes[n-1];
+    free(nodes);
+    return 1;
+}
+
+void deckdestroy(deck *deck){
+    if (deck == NULL) return;
+    freeCardNode(deck->top);
+    deck->top = NULL;
+    deck->bottom = NULL;
     deck->count = 0;
-    deck->masscount = 0;
-    return 0;
 }
