@@ -1,5 +1,5 @@
-#ifndef CARD_H
-#define CARD_H
+#ifndef CARD
+#define CARD
 #define CARDCOUNT 52
 #define SUITCOUNT 4
 #define RANKCOUNT 13
