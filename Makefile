@@ -17,4 +17,4 @@ run: game21
 	./game21
 
 clean:
-	rm -f *.o game21
+	rm -rf *.o game21 game21.dSYM

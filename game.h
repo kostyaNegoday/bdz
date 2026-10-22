@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAME
+#define GAME
 #include "deck.h"
 #include "hand.h"
 

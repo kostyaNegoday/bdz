@@ -1,5 +1,5 @@
-#ifndef DECK_H
-#define DECK_H
+#ifndef DECK
+#define DECK
 #include "card.h"
 
 typedef struct {
