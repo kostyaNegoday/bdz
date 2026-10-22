@@ -2,18 +2,17 @@
 #define DECK_H
 #include "card.h"
 
-struct  deck{
-    struct card *cards;
-    short int count; // карт в колоде сейчас
-    short int masscount; //вместимость колоды
-};
+typedef struct {
+    CardNode *top;
+    CardNode *bottom;
+    int count;
+} deck;
 
-int deckInit(struct deck *deck);
-int deckGivecard(struct deck *deck, struct card *outcard);
-int deckReturn(struct deck *deck, struct card *outcard);
-void deckSort(struct deck *deck, struct card *outcard);
-int deckDestr(struct deck *deck);
-
+int deckinit(deck *deck);
+CardNode *deckdraw(deck *deck);
+void deckbottom(deck *deck, CardNode *chain);
+int deckshuffle(deck *deck);
+void deckdestroy(deck *deck);
 
 #endif
 

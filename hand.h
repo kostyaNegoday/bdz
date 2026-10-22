@@ -1,18 +1,16 @@
 #ifndef HAND_H
 #define HAND_H
 #include "card.h"
-#include "deck.h"
 
-struct hand {
-    struct card *cards;
-    short int count; // карт в руке сейчас
-    short int masscount; //вместимость руки
-};
+typedef struct {
+    CardNode *head;
+    int count;
+} hand;
 
-int handInit(struct hand *hand);
-int handGivecard(struct hand *hand, struct card *outcard);
-int handReturn(struct hand *hand, struct card *outcard);
-void handSort(struct hand *hand, struct card *outcard);
-int handDestr(struct hand *hand);
+void handinit(hand *hand);
+int handsorted(hand *hand, CardNode *node);
+int handscore(hand *hand);
+CardNode *handtakeall(hand *hand);
+void handclear(hand *hand);
 
 #endif
