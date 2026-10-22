@@ -6,10 +6,12 @@ int validcard(card card) {
 }
 
 int rank(card card) {
-    return card.id % RANKCOUNT;
+    if (!validcard(card)) return 0;
+    return card.id % RANKCOUNT + 2;
 }
 
 int suit(card card) {
+    if (!validcard(card)) return -1;
     return card.id / RANKCOUNT;
 }
 
@@ -20,13 +22,15 @@ int cardsort(card c, card c1) {
     return (suit(c) > suit(c1)) - (suit(c) < suit(c1));
 }
 
-char *cardrankname(card card) {
-    char *names[RANKCOUNT] = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
-    return names[rank(card)];
+const char *cardrankname(card card) {
+    static const char *names[RANKCOUNT] = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+    if (!validcard(card)) return "?";
+    return names[rank(card) - 2];
 }
 
-char *cardsuitname(card card) {
-    char *names[SUITCOUNT] = {"Черви", "Бубны", "Крести", "Пики"};
+const char *cardsuitname(card card) {
+    static const char *names[SUITCOUNT] = {"Черви", "Бубны", "Крести", "Пики"};
+    if (!validcard(card)) return "?";
     return names[suit(card)];
 }
 
@@ -40,8 +44,9 @@ CardNode *createCardNode(card card) {
 }
 
 void freeCardNode(CardNode *node) {
-    if (node != NULL) {
+    while (node != NULL) {
         CardNode *next = node->next;
         free(node);
+        node = next;
     }
 }

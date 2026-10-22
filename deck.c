@@ -9,6 +9,7 @@ int deckinit(deck *deck){
             deckdestroy(deck);
             return 0;
         }
+        deckbottom(deck, node);
     }
     return 1;
 }
@@ -17,7 +18,7 @@ CardNode *deckdraw(deck *deck) {
     if (deck == NULL ||deck->top == NULL) return NULL;
     CardNode *node = deck->top;
     deck->top = node->next;
-    if (deck->top == NULL) deck->bottom == NULL;
+    if (deck->top == NULL) deck->bottom = NULL;
     node->next = NULL;
     --deck->count;
     return node;
@@ -33,8 +34,8 @@ void deckbottom (deck *deck, CardNode *chain){
             deck->bottom = chain;
         } else {
             deck->bottom->next = chain;
+            deck->bottom = chain;
         }
-        deck->bottom = chain;
         ++deck->count;
         chain = next;
     }
@@ -56,7 +57,7 @@ int deckshuffle(deck *deck){
         nodes[j] = tmp;
     }
 
-    for (int i =0; i<n;i++) nodes[i]->next = nodes[i+1];
+    for (int i = 0; i < n - 1; i++) nodes[i]->next = nodes[i+1];
     nodes[n-1]->next = NULL;
     deck->top = nodes[0];
     deck->bottom = nodes[n-1];

@@ -1,5 +1,5 @@
-#ifndef GAME
-#define GAME
+#ifndef GAME_H
+#define GAME_H
 #include "deck.h"
 #include "hand.h"
 
@@ -7,8 +7,12 @@
 #define MINPLAYERS 2
 #define MAXNAME 64
 #define MAXWINS 5
+#define PLAYING 0
+#define ROUNDOVER 1
+#define GAMEOVER 2
 #define GAMEOK 1
 #define GAMEFAILED 0
+#define NOMEMORY -1
 #define EMPTYDECK -2
 
 typedef struct {
@@ -27,15 +31,14 @@ typedef struct{
     int currentPlayer;
 } game;
 
-int newGame(game *game, int numPlayers, char *playerNames[]);
+int gameNew(game *game, char *names[], int count);
 int gameDraw(game *game);
 int gameStand(game *game);
 int gameShuffle(game *game);
 int gameNextround(game *game);
 int bestScore(game *game);
-int gameRoundWunner(game*game);
+int gameRoundWinner(game *game, int index);
 int gameValidate(game *game);
 void gameDestroy(game *game);
-
 
 #endif

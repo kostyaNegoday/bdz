@@ -7,17 +7,18 @@ typedef struct {
     int id;
 } card;
 
-typedef struct{
+typedef struct CardNode {
     card card;
-    CardNode *next;
+    struct CardNode *next;
 } CardNode;
 
 int validcard(card card);
 int rank(card card); 
 int suit(card card); 
 int cardsort(card c, card c1);
-char *cardrankname(card card);
-char *cardsuitname(card card);
+const char *cardrankname(card card);
+const char *cardsuitname(card card);
 CardNode *createCardNode(card card);
 void freeCardNode(CardNode *node);
+
 #endif
