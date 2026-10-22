@@ -8,7 +8,7 @@ struct card{
 };
 
 _Bool validcard(struct card c);
-const char rank(struct card c);  // номинал
-const char *suit(struct card c); // масть
+int rank(struct card c);  // номинал
+int *suit(struct card c); // масть
 
 #endif

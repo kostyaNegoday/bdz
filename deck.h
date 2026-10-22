@@ -10,7 +10,8 @@ struct  deck{
 
 int deckInit(struct deck *deck);
 int deckGivecard(struct deck *deck, struct card *outcard);
-void deckSort(struct deck *deck);
+int deckReturn(struct deck *deck, struct card *outcard);
+void deckSort(struct deck *deck, struct card *outcard);
 int deckDestr(struct deck *deck);
 
 
